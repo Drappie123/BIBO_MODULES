@@ -1,0 +1,270 @@
+# depslib dependency file v1.0
+1741860990 source:c:\users\quent\documents\documents\4. school\codeblocks\project 2\bibo\fuse.c
+	<avr/io.h>
+
+1744215276 source:c:\users\quent\documents\documents\4. school\codeblocks\project 2\bibo\hc-sr04.c
+	<avr/io.h>
+	<avr/interrupt.h>
+	"HC-SR04.h"
+	<util/atomic.h>
+
+1742807252 c:\users\quent\documents\documents\4. school\codeblocks\project 2\bibo\hc-sr04.h
+
+1747221490 source:c:\users\quent\documents\documents\4. school\codeblocks\project 2\bibo\main.c
+	<avr/io.h>
+	"TM1637.h"
+	"HC-SR04.h"
+	"stepper.h"
+	"config.h"
+	"basic_io.h"
+	"music.h"
+	"intermediate_control.h"
+
+1743848992 c:\users\quent\documents\documents\4. school\codeblocks\project 2\bibo\stepper.h
+
+1747221862 source:c:\users\quent\documents\documents\4. school\codeblocks\project 2\bibo\stepper.c
+	<avr/io.h>
+	<avr/interrupt.h>
+	<stdlib.h>
+	"stepper.h"
+	"config.h"
+
+1747221885 c:\users\quent\documents\documents\4. school\codeblocks\project 2\bibo\config.h
+
+1742636598 c:\users\quent\documents\documents\4. school\codeblocks\project 2\bibo\basic_inputs.h
+
+1742317281 source:c:\users\quent\documents\documents\4. school\codeblocks\project 2\bibo\basic_inputs.c
+	<avr/io.h>
+	"basic_inputs.h"
+
+1742033492 source:c:\users\quent\documents\documents\4. school\codeblocks\project 2\bibo\uart.c
+	<avr/io.h>
+	<stdio.h>
+	"UART.h"
+
+1742033492 c:\users\quent\documents\documents\4. school\codeblocks\project 2\bibo\uart.h
+
+1743006232 c:\users\quent\documents\documents\4. school\codeblocks\project 2\bibo\display.h
+
+1743247990 source:c:\users\quent\documents\documents\4. school\codeblocks\project 2\bibo\display.c
+	<avr/io.h>
+	"display.h"
+
+1744354992 source:c:\users\quent\documents\documents\4. school\codeblocks\project 2\bibo\basic_io.c
+	<avr/io.h>
+	<avr/interrupt.h>
+	<util/delay.h>
+	"TM1637.h"
+	"basic_io.h"
+	"config.h"
+	"stepper.h"
+	"music.h"
+
+1744205490 c:\users\quent\documents\documents\4. school\codeblocks\project 2\bibo\basic_io.h
+
+1744205490 c:\users\quent\documents\documents\4. school\codeblocks\project 2\bibo\intermediate_control.h
+
+1744307630 source:c:\users\quent\documents\documents\4. school\codeblocks\project 2\bibo\intermediate_control.c
+	<avr/io.h>
+	<avr/interrupt.h>
+	"intermediate_control.h"
+	"config.h"
+	"stepper.h"
+	"HC-SR04.h"
+	"basic_io.h"
+	"music.h"
+	"TM1637.h"
+
+1743747588 source:c:\users\quent\documents\documents\4. school\codeblocks\project 2\bibo\music.c
+	<avr/io.h>
+	"music.h"
+	"intermediate_control.h"
+
+1743849076 c:\users\quent\documents\documents\4. school\codeblocks\project 2\bibo\music.h
+
+1743849076 c:\users\quent\documents\documents\4. school\codeblocks\project 2\bibo\tm1637.h
+
+1744264367 source:c:\users\quent\documents\documents\4. school\codeblocks\project 2\bibo\tm1637.c
+	<avr/io.h>
+	"TM1637.h"
+	"config.h"
+
+1748953955 source:c:\users\24108952\downloads\bibo-main\bibo-main\basic_io.c
+	<avr/io.h>
+	<avr/interrupt.h>
+	<util/delay.h>
+	"TM1637.h"
+	"basic_io.h"
+	"config.h"
+	"stepper.h"
+	"music.h"
+
+1749065910 c:\users\24108952\downloads\bibo-main\bibo-main\tm1637.h
+
+1748953955 c:\users\24108952\downloads\bibo-main\bibo-main\basic_io.h
+
+1749551481 c:\users\24108952\downloads\bibo-main\bibo-main\config.h
+
+1748953955 c:\users\24108952\downloads\bibo-main\bibo-main\stepper.h
+
+1748953955 c:\users\24108952\downloads\bibo-main\bibo-main\music.h
+
+1748953955 source:c:\users\24108952\downloads\bibo-main\bibo-main\fuse.c
+	<avr/io.h>
+
+1748953955 source:c:\users\24108952\downloads\bibo-main\bibo-main\hc-sr04.c
+	<avr/io.h>
+	<avr/interrupt.h>
+	"HC-SR04.h"
+	<util/atomic.h>
+
+1748953955 c:\users\24108952\downloads\bibo-main\bibo-main\hc-sr04.h
+
+1748953955 source:c:\users\24108952\downloads\bibo-main\bibo-main\intermediate_control.c
+	<avr/io.h>
+	<avr/interrupt.h>
+	"intermediate_control.h"
+	"config.h"
+	"stepper.h"
+	"HC-SR04.h"
+	"basic_io.h"
+	"music.h"
+	"TM1637.h"
+
+1748953955 c:\users\24108952\downloads\bibo-main\bibo-main\intermediate_control.h
+
+1748953955 source:c:\users\24108952\downloads\bibo-main\bibo-main\music.c
+	<avr/io.h>
+	"music.h"
+	"intermediate_control.h"
+
+1748953955 source:c:\users\24108952\downloads\bibo-main\bibo-main\stepper.c
+	<avr/io.h>
+	<avr/interrupt.h>
+	<stdlib.h>
+	"stepper.h"
+	"config.h"
+
+1749065927 source:c:\users\24108952\downloads\bibo-main\bibo-main\tm1637.c
+	<avr/io.h>
+	"TM1637.h"
+	"config.h"
+
+1749552680 source:c:\users\24108952\downloads\bibo-main\bibo-main\main.c
+	<avr/io.h>
+	"TM1637.h"
+	"HC-SR04.h"
+	"stepper.h"
+	"config.h"
+	"basic_io.h"
+	"music.h"
+	"intermediate_control.h"
+	"communication.h"
+
+1749506809 c:\users\24108952\downloads\bibo-main\bibo-main\communication.h
+	<stdint.h>
+
+1749506958 source:c:\users\24108952\downloads\bibo-main\bibo-main\communication.c
+	<avr/io.h>
+	<avr/interrupt.h>
+	"communication.h"
+	"config.h"
+
+1748953955 source:c:\users\24108952\documents\code_blocks_projects_hbo\bibo-rfid\bibo-main\basic_io.c
+	<avr/io.h>
+	<avr/interrupt.h>
+	<util/delay.h>
+	"TM1637.h"
+	"basic_io.h"
+	"config.h"
+	"stepper.h"
+	"music.h"
+
+1749065910 c:\users\24108952\documents\code_blocks_projects_hbo\bibo-rfid\bibo-main\tm1637.h
+
+1748953955 c:\users\24108952\documents\code_blocks_projects_hbo\bibo-rfid\bibo-main\basic_io.h
+
+1749551481 c:\users\24108952\documents\code_blocks_projects_hbo\bibo-rfid\bibo-main\config.h
+
+1748953955 c:\users\24108952\documents\code_blocks_projects_hbo\bibo-rfid\bibo-main\stepper.h
+
+1748953955 c:\users\24108952\documents\code_blocks_projects_hbo\bibo-rfid\bibo-main\music.h
+
+1749506958 source:c:\users\24108952\documents\code_blocks_projects_hbo\bibo-rfid\bibo-main\communication.c
+	<avr/io.h>
+	<avr/interrupt.h>
+	"communication.h"
+	"config.h"
+
+1749506809 c:\users\24108952\documents\code_blocks_projects_hbo\bibo-rfid\bibo-main\communication.h
+	<stdint.h>
+
+1748953955 source:c:\users\24108952\documents\code_blocks_projects_hbo\bibo-rfid\bibo-main\fuse.c
+	<avr/io.h>
+
+1748953955 source:c:\users\24108952\documents\code_blocks_projects_hbo\bibo-rfid\bibo-main\hc-sr04.c
+	<avr/io.h>
+	<avr/interrupt.h>
+	"HC-SR04.h"
+	<util/atomic.h>
+
+1748953955 c:\users\24108952\documents\code_blocks_projects_hbo\bibo-rfid\bibo-main\hc-sr04.h
+
+1748953955 source:c:\users\24108952\documents\code_blocks_projects_hbo\bibo-rfid\bibo-main\intermediate_control.c
+	<avr/io.h>
+	<avr/interrupt.h>
+	"intermediate_control.h"
+	"config.h"
+	"stepper.h"
+	"HC-SR04.h"
+	"basic_io.h"
+	"music.h"
+	"TM1637.h"
+
+1748953955 c:\users\24108952\documents\code_blocks_projects_hbo\bibo-rfid\bibo-main\intermediate_control.h
+
+1748953955 source:c:\users\24108952\documents\code_blocks_projects_hbo\bibo-rfid\bibo-main\music.c
+	<avr/io.h>
+	"music.h"
+	"intermediate_control.h"
+
+1748953955 source:c:\users\24108952\documents\code_blocks_projects_hbo\bibo-rfid\bibo-main\stepper.c
+	<avr/io.h>
+	<avr/interrupt.h>
+	<stdlib.h>
+	"stepper.h"
+	"config.h"
+
+1749065927 source:c:\users\24108952\documents\code_blocks_projects_hbo\bibo-rfid\bibo-main\tm1637.c
+	<avr/io.h>
+	"TM1637.h"
+	"config.h"
+
+1749564190 source:c:\users\24108952\documents\code_blocks_projects_hbo\bibo-rfid\bibo-main\main_rfid.c
+	"rfid_mfrc522.h"
+	<avr/io.h>
+	<util/delay.h>
+
+1749564190 c:\users\24108952\documents\code_blocks_projects_hbo\bibo-rfid\bibo-main\rfid_mfrc522.h
+	<stdint.h>
+	<stdbool.h>
+
+1749564190 source:c:\users\24108952\documents\code_blocks_projects_hbo\bibo-rfid\bibo-main\rfid_mfrc522.c
+	"rfid_mfrc522.h"
+	<util/delay.h>
+	<avr/io.h>
+	<stdint.h>
+
+1749630405 source:c:\users\24108952\documents\code_blocks_projects_hbo\bibo-rfid\bibo-main\main.c
+	<avr/io.h>
+	<util/delay.h>
+	"TM1637.h"
+	"HC-SR04.h"
+	"stepper.h"
+	"config.h"
+	"basic_io.h"
+	"music.h"
+	"intermediate_control.h"
+	"communication.h"
+	"rfid_mfrc522.h"
+
