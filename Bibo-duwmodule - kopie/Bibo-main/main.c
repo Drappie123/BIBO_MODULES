@@ -18,10 +18,15 @@ Contains state machine for AGV control
 /// --- limit_switches---///
 void init_limit_switches() {
     // Set PD0 and PD1 (pins 25, 26) as input
-    DDRD &= ~((1 << PA3) | (1 << PA4));
+    DDRA &= ~((1 << PA3) | (1 << PA4));
 
     // Optional: Enable pull-up resistors
-    PORTD |= (1 << PA3) | (1 << PA4);
+    PORTA |= (1 << PA3) | (1 << PA4);
+    // Set PD1 startbutton
+    DDRD &= ~((1 << PD1));
+
+    // Optional: Enable pull-up resistors startbutton
+    PORTD |= (1 << PD1);
 }
 
 uint8_t light_limit_switch_25() {
@@ -32,6 +37,11 @@ uint8_t light_limit_switch_25() {
 uint8_t heavy_limit_switch_26() {
     return (PINA & (1 << PA2)) ? 1 : 0;
 }
+//starting button
+uint8_t starting_button() {
+    return (PIND & (1 << PD1)) ? 1 : 0;
+}
+
 
 
 int main(void)
@@ -52,7 +62,6 @@ int main(void)
     };
 
     enum available_states current_state =       STARTING_STATE;
-    int starting_button=        0;
     // First turn 0 is left, 1 is right
 
     /// --- Init --- ///
@@ -145,7 +154,7 @@ int main(void)
             }
 
         default:
-            if(starting_button==1){
+            if(starting_button()){
             task_manager(forward_fast, standard_speed, standard_acceleration);//does AGV return an ack here?
                 if (light_limit_switch_25() == 0) {
                         current_state = weight_detection;

@@ -18,6 +18,17 @@ Contains state machine for AGV control
 
 
 //OPERATOR (MASTER)
+void start_button_init(void){
+    // Set PD1 startbutton
+    DDRD &= ~((1 << PD1));
+
+    // Optional: Enable pull-up resistors startbutton
+    PORTD |= (1 << PD1);
+}
+//starting button
+uint8_t starting_button() {
+    return (PIND & (1 << PD1)) ? 1 : 0;
+}
 
 
 int main(void)
@@ -36,7 +47,6 @@ int main(void)
     };
 
     enum available_states current_state =       STARTING_STATE;
-    int starting_button=        0;
     int package_metal=          0;
     int package_non_metal=      0;
     int change_demo_package=    4;
@@ -118,7 +128,7 @@ int main(void)
                 task_manager(turn_right, standard_speed, standard_acceleration);
             }
         default:
-            if(starting_button==1){
+            if(starting_button()){
             task_manager(forward_fast, standard_speed, standard_acceleration);}//does AGV return an ack here?
             break;
 
