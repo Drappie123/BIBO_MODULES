@@ -6,8 +6,6 @@ Contains state machine for AGV control
 #include <avr/io.h>                 // Needed for AVR programming
 // -- Custom libraries -- //
 #include "TM1637.h"                 // Display
-#include "HC-SR04.h"                // Ultrasonic sensors
-#include "stepper.h"                // motor control
 #include "config.h"                 // defines with settings
 #include "basic_io.h"               // various in- and outputs
 #include "music.h"                  // Buzzer control
@@ -66,6 +64,7 @@ int main(void)
 
     /// --- Init --- ///
     init();
+    init_limit_switches();
 
 /// ===== Main loop ===== ///
     while(1){
@@ -105,7 +104,7 @@ int main(void)
             }
             break;*/
         case weight_detection:
-            play_beep();
+            //play_beep();
             task_manager(forward_slow, standard_speed, standard_acceleration);
             if (light_limit_switch_25() == 0) {
                 while(!gp_timer(DETECTION_STOP_TIME)){
@@ -148,17 +147,17 @@ int main(void)
             current_state = einde_opdracht;
             break;
         case forward:
-            task_manager(forward_fast, standard_speed, standard_acceleration);//does AGV return an ack here?
+            //task_manager(forward_fast, standard_speed, standard_acceleration);//does AGV return an ack here?
             if (light_limit_switch_25() == 0) {
                 current_state = weight_detection;
             }
 
-        default:
+        default: // Should be starting_state?
             if(starting_button()){
             task_manager(forward_fast, standard_speed, standard_acceleration);//does AGV return an ack here?
-                if (light_limit_switch_25() == 0) {
-                        current_state = weight_detection;
-            }}
+            // Transition
+            current_state = forward;
+            }
             break;
 
 

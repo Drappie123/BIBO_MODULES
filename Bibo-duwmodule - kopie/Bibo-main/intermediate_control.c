@@ -13,9 +13,9 @@
 // --- Init all --- //
 void init(void){
     basic_io_init();
-    ultrasonic_init();
+    //ultrasonic_init();
     display_init();
-    stepper_init();
+    //stepper_init();
     itermediate_control_init();
     music_init();
     sei();

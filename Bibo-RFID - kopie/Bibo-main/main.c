@@ -100,7 +100,7 @@ int main(void)
                 task_manager(stop, standard_speed, standard_acceleration);
                 // Play sound and display end
                 display_end();
-                play_beep();
+                while(play_beep());
                 current_state = einde_opdracht;
             }
             else{

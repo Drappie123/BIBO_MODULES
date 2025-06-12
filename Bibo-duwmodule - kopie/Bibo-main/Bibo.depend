@@ -240,3 +240,82 @@
 	"TM1637.h"
 	"config.h"
 
+1749722263 source:c:\users\quent\documents\documents\4. school\project 2 agv\github modules\bibo_modules\bibo-duwmodule - kopie\bibo-main\basic_io.c
+	<avr/io.h>
+	<avr/interrupt.h>
+	<util/delay.h>
+	"TM1637.h"
+	"basic_io.h"
+	"config.h"
+	"stepper.h"
+	"music.h"
+
+1749722263 c:\users\quent\documents\documents\4. school\project 2 agv\github modules\bibo_modules\bibo-duwmodule - kopie\bibo-main\tm1637.h
+
+1749722263 c:\users\quent\documents\documents\4. school\project 2 agv\github modules\bibo_modules\bibo-duwmodule - kopie\bibo-main\basic_io.h
+
+1749722263 c:\users\quent\documents\documents\4. school\project 2 agv\github modules\bibo_modules\bibo-duwmodule - kopie\bibo-main\config.h
+
+1749722263 c:\users\quent\documents\documents\4. school\project 2 agv\github modules\bibo_modules\bibo-duwmodule - kopie\bibo-main\stepper.h
+
+1749722263 c:\users\quent\documents\documents\4. school\project 2 agv\github modules\bibo_modules\bibo-duwmodule - kopie\bibo-main\music.h
+
+1749722263 source:c:\users\quent\documents\documents\4. school\project 2 agv\github modules\bibo_modules\bibo-duwmodule - kopie\bibo-main\communication.c
+	<avr/io.h>
+	<avr/interrupt.h>
+	"communication.h"
+	"config.h"
+
+1749722263 c:\users\quent\documents\documents\4. school\project 2 agv\github modules\bibo_modules\bibo-duwmodule - kopie\bibo-main\communication.h
+	<stdint.h>
+
+1749722263 source:c:\users\quent\documents\documents\4. school\project 2 agv\github modules\bibo_modules\bibo-duwmodule - kopie\bibo-main\fuse.c
+	<avr/io.h>
+
+1749722263 source:c:\users\quent\documents\documents\4. school\project 2 agv\github modules\bibo_modules\bibo-duwmodule - kopie\bibo-main\hc-sr04.c
+	<avr/io.h>
+	<avr/interrupt.h>
+	"HC-SR04.h"
+	<util/atomic.h>
+
+1749722263 c:\users\quent\documents\documents\4. school\project 2 agv\github modules\bibo_modules\bibo-duwmodule - kopie\bibo-main\hc-sr04.h
+
+1749722263 source:c:\users\quent\documents\documents\4. school\project 2 agv\github modules\bibo_modules\bibo-duwmodule - kopie\bibo-main\music.c
+	<avr/io.h>
+	"music.h"
+	"intermediate_control.h"
+
+1749722263 c:\users\quent\documents\documents\4. school\project 2 agv\github modules\bibo_modules\bibo-duwmodule - kopie\bibo-main\intermediate_control.h
+
+1749722263 source:c:\users\quent\documents\documents\4. school\project 2 agv\github modules\bibo_modules\bibo-duwmodule - kopie\bibo-main\stepper.c
+	<avr/io.h>
+	<avr/interrupt.h>
+	<stdlib.h>
+	"stepper.h"
+	"config.h"
+
+1749722263 source:c:\users\quent\documents\documents\4. school\project 2 agv\github modules\bibo_modules\bibo-duwmodule - kopie\bibo-main\tm1637.c
+	<avr/io.h>
+	"TM1637.h"
+	"config.h"
+
+1749723255 source:c:\users\quent\documents\documents\4. school\project 2 agv\github modules\bibo_modules\bibo-duwmodule - kopie\bibo-main\intermediate_control.c
+	<avr/io.h>
+	<avr/interrupt.h>
+	"intermediate_control.h"
+	"config.h"
+	"stepper.h"
+	"HC-SR04.h"
+	"basic_io.h"
+	"music.h"
+	"TM1637.h"
+
+1749723399 source:c:\users\quent\documents\documents\4. school\project 2 agv\github modules\bibo_modules\bibo-duwmodule - kopie\bibo-main\main.c
+	<avr/io.h>
+	"TM1637.h"
+	"config.h"
+	"basic_io.h"
+	"music.h"
+	"intermediate_control.h"
+	"communication.h"
+
