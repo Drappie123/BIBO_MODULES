@@ -41,9 +41,9 @@ ISR(INT0_vect){
 // --- Init all basic-io --- //
 void basic_io_init(void){
     donk_init();
-    buttons_init();
-    init_stop_button();
-    led_init();
+    //buttons_init();
+    //init_stop_button();
+    //led_init();
 }
 // --- E17-D80NK init -- ///
 void donk_init(void){

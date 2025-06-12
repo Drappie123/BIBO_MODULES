@@ -1,6 +1,7 @@
 #ifndef CONFIG_H_INCLUDED
 #define CONFIG_H_INCLUDED
 /// === Configuration === ///
+#define STARTING_STATE wait
 /// --- Package mode --- ///
 // --- Wall range settings --- //
 #define WALL_MAX_RANGE          25
@@ -48,8 +49,8 @@
 // --- Display brightness --- //
 #define NORMAL_BRIGHTNESS       2
 #define MAX_BRIGHTNESS          7
-#define standard_speed          0x01
-#define standard_acceleration   0x01
+#define standard_speed          0xFF
+#define standard_acceleration   0xFF
 /// === Utility === ///
 #define CLAMP(value, min, max) ((value) < (min) ? (min) : (value) > (max) ? (max) : (value))
 
