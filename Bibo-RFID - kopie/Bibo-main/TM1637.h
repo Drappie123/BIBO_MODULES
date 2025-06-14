@@ -36,7 +36,7 @@ void display_srch(void);
 void display_light(void);
 void display_heavy(void);
 void display_txt_stop(void);
-void display_metal_and_non_metal(int package_metal, int package_non_metal);
+void display_metal_and_non_metal(int package_tag, int package_no_tag);
 
 
 #endif // TM1637_H_INCLUDED

@@ -34,22 +34,30 @@ int main(void)
     /// --- Variables --- ///
     // State machine states
     enum available_states {
+        test,
         wait,
-        // Navigeren + tellen
         package_detected,
         forward,
-        //new code
-        einde_opdracht,
+        end,
         u_turn,
-        backward_driving
+
+    };
+    // State machine substates
+    enum available_substates {
+        entry,
+        running
     };
 
     enum available_states current_state = wait;
-    int package_metal=          0;
-    int package_non_metal=      0;
-    int change_demo_package=    4;
+    enum available_substates current_substate = entry;
+
+    int package_tag=          0;
+    int package_no_tag=      0;
     char donk_mem_left = 0;
     char donk_mem_right = 0;
+    int scan_time_left = 0;
+    int scan_time_right = 0;
+    char turn_made = 0;
 
     /// --- Init --- ///
     // Deze twee moet je in de main (of op de plek waar je de functie roept als dat niet in main is)
@@ -64,101 +72,151 @@ int main(void)
 
 /// ===== Main loop ===== ///
     while(1){
-        //display_end();
-        // Statemachine Switch
+        /// === Statemachine === ///
         switch(current_state){
-        case wait: // Should this be starting_state?
+        /// -- Test state -- ///
+        case test:
             if(donk_left() || donk_right()){
                 display_fol();
             }
             else{
                 display_pac();
             }
-            //display_go();
-            //USART1_sendCommand(0xFF, 0xAA, 0x11, 0xDD);
-            //_delay_ms(5000);
-            if(starting_button()){
-            task_manager(forward_fast, standard_speed, standard_acceleration);
-            current_state = forward;
-            display_end();
-            }//does AGV return an ack here?
             break;
-        /// --- PACKAGE DETECTED --- ///
-        case package_detected:
-            // AGV should be stopped
-            // Reset GP timer
-            gp_timer(-1);
-            if(rfid_tag_detected(rfid_right)){
-                // Add 1 to package count
-                package_metal++;
+        /// -- Wait state -- ///
+        case wait:
+            if(starting_button()){
+                while(!gp_timer(TEXT_DISPLAY_TIME)){
+                    display_go();
+                }
+                current_state = forward;
             }
-            else{
-                if(rfid_tag_detected(rfid_left)){
-                // Add 1 to package count
-                package_metal++;
+            break;
+        /// -- Forward driving -- ///
+        case forward:
+            switch(current_substate){
+            case entry:
+                // Send forward driving command
+                task_manager(forward_fast, standard_speed, standard_acceleration);
+                current_substate = running;
+                break;
+            case running:
+                // Display packages counted by category
+                display_metal_and_non_metal(package_tag, package_no_tag);
+                // Check sensors for packages
+                if (donk_detection(&donk_mem_left, &donk_mem_right)){
+                    // Transition to detection
+                    current_state = package_detected;
+                    current_substate = entry;
+                }
+                // Scan RFID tags
+                if(scan_time_left){
+                    if(rfid_check_tag_present(rfid_left)){
+                        // Correct count
+                        package_no_tag--;
+                        package_tag++;
+                        // Stop scanning
+                        scan_time_left = 0;
+                    }
+                }
+                if(scan_time_right){
+                    if(rfid_check_tag_present(rfid_right)){
+                        // Correct count
+                        package_no_tag--;
+                        package_tag++;
+                        // Stop scanning
+                        scan_time_right = 0;
+                    }
+                }
+                // Reduce scan time
+                if(gp_timer2(1)){
+                    if(scan_time_left){
+                        scan_time_left--;
+                    }
+                    if(scan_time_right){
+                        scan_time_right--;
+                    }
+                }
+                // Check for ACK to initiate U-turn
+                if(USART1_receiveByte()==0x01){
+                    // Transition to U-turn
+                    current_state = u_turn;
+                    current_substate = entry;
+                }
+                break;
+            }
+            break;
+        /// -- PACKAGE DETECTED -- ///
+        case package_detected:
+            switch(current_substate){
+            case entry:
+                if(turn_made){
+                    current_state = end;
                 }
                 else{
-                package_non_metal++;
-            }
-            }
-            // Make display extra bright
-            display_brightness(MAX_BRIGHTNESS);
-            // Play buzzer sound
-            while(play_beep()){
-                display_metal_and_non_metal(package_metal, package_non_metal);
-            }
-            // Remain stopped for set time
-            while(!gp_timer(DETECTION_STOP_TIME)){
-                display_metal_and_non_metal(package_metal, package_non_metal);
-            }
-            //THIS is for the change_demo_area. at package 5 for non metal
-            if (package_non_metal==change_demo_package)
-            {
-                // Stop AGV
-                task_manager(stop, standard_speed, standard_acceleration);
-                // Play sound and display end
-                display_end();
-                while(play_beep());
-                current_state = einde_opdracht;
-            }
-            else{
-                // Start moving
-                task_manager(forward_fast, standard_speed, standard_acceleration);
-                // Transition
-                current_state = forward;
-            }
-            break;
-        case einde_opdracht: //einde bereikt
-            // AGV is stopped
-            display_end();
-            break;
-        case backward_driving:
-            task_manager(backward_fast, standard_speed, standard_acceleration);
-            current_state = einde_opdracht;
-            break;
-        case forward:
-            display_metal_and_non_metal(package_metal, package_non_metal);
-            //task_manager(forward_fast, standard_speed, standard_acceleration);//does AGV return an ack here?
-            //while driving look for packages
-            //_delay_ms(3000);
-            if (donk_left() || donk_right()){
-                // Stop
-                task_manager(stop, standard_speed, standard_acceleration);
-                // Transition
-                display_cfg();
-                current_state = package_detected;
-            }
-            //listing for an ACK to know when to make u_turn, this only happens once
-            if(USART1_receiveByte()==0x01){
-                task_manager(turn_right, standard_speed, standard_acceleration);
-                current_state = u_turn;
+                    package_no_tag++;
+                    // Remember to scan RFID tags while driving
+                    if(donk_mem_left){
+                        scan_time_left = SCAN_TIME;
+                    }
+                    else if(donk_mem_right){
+                        scan_time_right = SCAN_TIME;
+                    }
+                    // Send command to stop AGV
+                    task_manager(stop, standard_speed, standard_acceleration);
+                    current_substate = running;
+                }
+                break;
+            case running:
+                // Display package count
+                display_metal_and_non_metal(package_tag, package_no_tag);
+                // Make display extra bright
+                display_brightness(MAX_BRIGHTNESS);
+                // Play buzzer sound
+                while(play_beep()){
+                    display_metal_and_non_metal(package_tag, package_no_tag);
+                }
+                // Remain stopped for set time
+                while(!gp_timer(DETECTION_STOP_TIME)){
+                    display_metal_and_non_metal(package_tag, package_no_tag);
+                }
+
+                break;
             }
             break;
+        /// -- U-turn -- ///
         case u_turn:
-            display_turn();
-            if(USART1_receiveByte()==0x01){
-                task_manager(forward_fast, standard_speed, standard_acceleration);
-                current_state = forward;
+            switch(current_substate){
+            case entry:
+                // Send command to initiate turn
+                task_manager(turn_right, standard_speed, standard_acceleration);
+                turn_made = 1;
+                current_substate = running;
+                break;
+            case running:
+                display_turn();
+                if(USART1_receiveByte()==0x01){
+                    current_state = forward;
+                    current_substate = entry;
+                }
+                break;
+            }
+            break;
+        /// -- End state -- ///
+        case end: //einde bereikt
+            switch(current_substate){
+            case entry:
+                // Send command to stop AGV
+                task_manager(stop, standard_speed, standard_acceleration);
+                display_end();
+                // Reset timer and play song
+                gp_timer(-1);
+                while(play_song());
+                current_substate = running;
+                break;
+            case running:
+                display_end();
+                break;
             }
             break;
         }
@@ -166,6 +224,5 @@ int main(void)
 
         //display_statemachine(current_state);
     } // end of Main loop //
-
     return 0;
 } // end of Main //

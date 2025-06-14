@@ -17,24 +17,13 @@
 #define PACKAGE_COUNT_MAX       99
 // Stop time is in addition to buzzer time
 #define DETECTION_STOP_TIME     10
+#define SCAN_TIME               20
 // --- Turn movement control --- //
 #define TURNING_SPEED           8 // Rec: 8 Max:
 #define TURNING_RATIO           81
 #define TURN_FORWARD_STEPS      3000
 #define TURN_COUNTED_RATIO      40
 #define TURN_WALL_DISTANCE      12
-/// --- Following mode --- ///
-// --- Range settings --- ///
-#define FOLLOW_DISTANCE_MIN     10
-#define FOLLOW_DISTANCE_MAX     100
-// Margin is the allowed error between left and right distances
-#define FOLLOW_DISTANCE_MARGIN  15
-#define FOLLOW_DETECTION_MARGIN 30
-// AGV stops when the actual distance is greater than limit + following distance
-#define FOLLOW_DISTANCE_LIMIT   50
-// --- Movement settings --- //
-#define FOLLOW_SPEED_MULTIPLIER 1
-#define FOLLOW_STEERING         60
 /// --- General settings --- ///
 // Number of detection needed, 1 lowest sensitivity
 #define PATH_SENSITIVITY        4
