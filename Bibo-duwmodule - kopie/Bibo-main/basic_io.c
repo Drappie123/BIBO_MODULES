@@ -13,7 +13,7 @@
 // --- STOP KNOP --- //
 ISR(INT0_vect){
     if(stop_pressed()){
-        while(!plus_pressed_once() || stop_pressed()){
+        while(stop_pressed()){
             // Stop steppers
             DDR_ST1_STEP &= ~(1<<PIN_ST1_STEP);
             DDR_ST2_STEP &= ~(1<<PIN_ST2_STEP);
@@ -22,7 +22,7 @@ ISR(INT0_vect){
                 display_txt_stop();
             }
             else{
-                if(enter_pressed_once() && !stop_pressed()){
+                if(!stop_pressed()){
                     // RESET arduino
                     cli();
                     // Enable Watchdog Timer and set minimum timeout
@@ -40,31 +40,8 @@ ISR(INT0_vect){
 
 // --- Init all basic-io --- //
 void basic_io_init(void){
-    donk_init();
-    buttons_init();
     init_stop_button();
-    led_init();
-}
-// --- E17-D80NK init -- ///
-void donk_init(void){
-    // Make input
-    DDR_DONK1 &= ~(1<<PIN_DONK1);
-    DDR_DONK2 &= ~(1<<PIN_DONK2);
-    // Turn on pullup
-    PORT_DONK1 |= (1<<PIN_DONK1);
-    PORT_DONK2 |= (1<<PIN_DONK2);
-}
-// --- User interface buttons -- //
-void buttons_init(void){
-    // Make all input & enable pullup
-    DDR_PLUS &= ~(1<<PIN_PLUS);
-    PORT_PLUS |= (1<<PIN_PLUS);
-
-    DDR_MINUS &= ~(1<<PIN_MINUS);
-    PORT_MINUS |= (1<<PIN_MINUS);
-
-    DDR_ENTER &= ~(1<<PIN_ENTER);
-    PORT_ENTER |= (1<<PIN_ENTER);
+    init_limit_switches();
 }
 
 // --- INIT INTERRUPT FOR STOP BUTTON --- //
@@ -73,95 +50,33 @@ void init_stop_button(void){
     EICRA |= (1<<ISC01) | (1<<ISC00);  // Rising edge
     EIMSK |= (1<<INT0);
 }
-// --- INIT LEDS --- //
-void led_init(void){
-    DDR_LED |= (1<<PIN_LED);
-    led_control(0);
-}
 // --- Functions for reading buttons and sensors --- //
-char donk_left(void){
-    return !(REG_DONK1 & (1<<PIN_DONK1));
-}
-char donk_right(void){
-    return !(REG_DONK2 & (1<<PIN_DONK2));
-}
-
-char plus_pressed(void) {
-    return !(REG_PLUS & (1 << PIN_PLUS));
-}
-
-char minus_pressed(void) {
-    return !(REG_MINUS & (1 << PIN_MINUS));
-}
-
-char enter_pressed(void) {
-    return !(REG_ENTER & (1 << PIN_ENTER));
-}
-
 char stop_pressed(void) {
     return (REG_STOP & (1 << PIN_STOP));
 }
-// --- Functions for reading single buttons presses with debounce --- //
-char plus_pressed_once(void){
-    static int pressed_before = 0;
-    // Only return 1 when not pressed before
-    if(plus_pressed()){
-        if(!pressed_before){
-            _delay_ms(DEBOUNCE_TIME);
-            pressed_before = 1;
-            return 1;
-        }
-    }
-    else{
-        if(pressed_before){
-            _delay_ms(DEBOUNCE_TIME);
-            pressed_before = 0;
-        }
-    }
-    return 0;
+
+/// --- limit_switches---///
+void init_limit_switches(void) {
+    // Set PD0 and PD1 (pins 25, 26) as input
+    DDRA &= ~((1 << PA3) | (1 << PA4));
+
+    // Optional: Enable pull-up resistors
+    PORTA |= (1 << PA3) | (1 << PA4);
+    // Set PD1 startbutton
+    DDRD &= ~((1 << PD1));
+
+    // Optional: Enable pull-up resistors startbutton
+    PORTD |= (1 << PD1);
 }
 
-char minus_pressed_once(void) {
-    static int pressed_before = 0;
-    // Only return 1 when not pressed before
-    if (minus_pressed()) {
-        if (!pressed_before) {
-            _delay_ms(DEBOUNCE_TIME);
-            pressed_before = 1;
-            return 1;
-        }
-    } else {
-        if (pressed_before) {
-            _delay_ms(DEBOUNCE_TIME);
-            pressed_before = 0;
-        }
-    }
-    return 0;
+uint8_t light_limit_switch_25(void) {
+    return !(PINA & (1 << PA3));
 }
 
-char enter_pressed_once(void) {
-    static int pressed_before = 0;
-    // Only return 1 when not pressed before
-    if (enter_pressed()) {
-        if (!pressed_before) {
-            _delay_ms(DEBOUNCE_TIME);
-            pressed_before = 1;
-            return 1;
-        }
-    } else {
-        if (pressed_before) {
-            _delay_ms(DEBOUNCE_TIME);
-            pressed_before = 0;
-        }
-    }
-    return 0;
+uint8_t heavy_limit_switch_26(void) {
+    return !(PINA & (1 << PA2));
 }
-
-void led_control(char power){
-    if(power){
-        PORT_LED &= ~(1<<PIN_LED);
-    }
-    else{
-        PORT_LED |= (1<<PIN_LED);
-    }
+//starting button
+uint8_t starting_button(void) {
+    return !(PIND & (1 << PD1));
 }

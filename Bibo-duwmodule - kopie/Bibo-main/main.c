@@ -12,62 +12,138 @@ Contains state machine for AGV control
 #include "intermediate_control.h"   // Control functions from other libraries
 #include "communication.h"          // communication between master and slave
 
-//OPERATOR (MASTER)
-/// --- limit_switches---///
-void init_limit_switches() {
-    // Set PD0 and PD1 (pins 25, 26) as input
-    DDRA &= ~((1 << PA3) | (1 << PA4));
-
-    // Optional: Enable pull-up resistors
-    PORTA |= (1 << PA3) | (1 << PA4);
-    // Set PD1 startbutton
-    DDRD &= ~((1 << PD1));
-
-    // Optional: Enable pull-up resistors startbutton
-    PORTD |= (1 << PD1);
-}
-
-uint8_t light_limit_switch_25() {
-    // Returns 0 if pressed (connected to GND), 1 if not pressed
-    return (PINA & (1 << PA3)) ? 1 : 0;
-}
-
-uint8_t heavy_limit_switch_26() {
-    return (PINA & (1 << PA2)) ? 1 : 0;
-}
-//starting button
-uint8_t starting_button() {
-    return (PIND & (1 << PD1)) ? 1 : 0;
-}
-
-
-
 int main(void)
 {
     /// --- Variables --- ///
     // State machine states
     enum available_states {
-        STARTING_STATE,
-        // Navigeren + tellen
+        test,
+        wait,
         forward,
-        //new code
-        einde_opdracht,
         weight_detection,
         light_weight,
         heavy_weight,
         s_turn,
-        backward_driving
+        reverse,
+        end
+    };
+    enum available_sub_states {
+        entry,
+        running,
+        exit
     };
 
-    enum available_states current_state =       STARTING_STATE;
+    enum available_states current_state = wait;
+    enum available_sub_states current_sub_state = entry;
     // First turn 0 is left, 1 is right
 
     /// --- Init --- ///
     init();
-    init_limit_switches();
 
 /// ===== Main loop ===== ///
     while(1){
+        // Statemachine Switch
+        switch(current_state){
+        case test:
+            break;
+        case wait:
+            if(starting_button()){
+                while(!gp_timer(TEXT_DISPLAY_TIME)){
+                    display_go();
+                }
+                current_state = forward;
+            }
+            break;
+        case forward:
+            switch(current_sub_state){
+                case entry:
+                    // Send forward driving command
+                    task_manager(forward_fast, standard_speed, standard_acceleration);
+                    current_sub_state = running;
+                    gp_timer(-1);
+                    break;
+                case running:
+                    // After set time, go slower
+                    if(gp_timer(50)){
+                        // Slow down
+                        task_manager(forward_fast, 0x0F, standard_acceleration);
+                        current_sub_state = exit;
+                    }
+                    break;
+                case exit:
+                    if(light_limit_switch_25()){
+                        // Slow down further
+                        task_manager(forward_fast, 0x09, standard_acceleration);
+                        // Transition
+                        current_state = weight_detection;
+                        current_sub_state = entry;
+                    }
+                break;
+            }
+            break;
+        case reverse:
+            switch(current_sub_state){
+                default:
+                case entry:
+                    // Send forward driving command
+                    task_manager(forward_fast, standard_speed, standard_acceleration);
+                    current_sub_state = running;
+                    break;
+                case running:
+                    // Check for ACK at end of path
+                    if(USART1_receiveByte()==0x01){
+                        // Transition to end
+                        current_state = end;
+                        current_sub_state = entry;
+                    }
+                    break;
+            }
+            break;
+        case weight_detection:
+            switch(current_sub_state){
+                default:
+                case entry:
+                    if(heavy_limit_switch_26()){
+                        // Stop
+                        task_manager(stop, standard_speed, standard_acceleration);
+                        // Add to heavy count
+                        current_sub_state = running;
+                    }
+                    if(gp_timer(5)){
+                        // Stop
+                        task_manager(stop, standard_speed, standard_acceleration);
+                        // Add to light count
+                        current_sub_state = running;
+                    }
+                    break;
+                case running:
+                    if(gp_timer(5)){
+                        current_state = s_turn;
+                        current_sub_state = entry;
+                    }
+                    break;
+            }
+            break;
+        case s_turn:
+            break;
+        case end:
+            switch(current_sub_state){
+                default:
+                case entry:
+                    // Send command to stop AGV
+                    task_manager(stop, standard_speed, standard_acceleration);
+                    display_end();
+                    // Reset timer and play song
+                    gp_timer(-1);
+                    while(play_song());
+                    current_sub_state = running;
+                    break;
+                case running:
+                    display_end();
+                    break;
+            }
+            break;
+        }
         // Statemachine Switch
         switch(current_state){
         /// --- PACKAGE DETECTED --- ///
@@ -121,7 +197,7 @@ int main(void)
             while(!gp_timer(DETECTION_STOP_TIME)){
                     display_heavy();}
             task_manager(stop, standard_speed, standard_acceleration);//Might need to be in timer, idk what the stop function does
-            current_state = backward_driving;
+            current_state = reverse;
 
 
             break;
@@ -130,7 +206,7 @@ int main(void)
             task_manager(stop, standard_speed, standard_acceleration);
             current_state = s_turn;
             break;
-        case einde_opdracht: //einde bereikt
+        case end: //einde bereikt
             task_manager(stop, standard_speed, standard_acceleration);
             display_end();
             play_beep();
@@ -142,9 +218,9 @@ int main(void)
             //als S-bocht klaar, AGV weer op stand 1
             current_state = forward;//Deze kunnen we ook gwn programmering in s bocht zelf want verder wordt deze state niet gebruikt
             break;
-        case backward_driving:
+        case reverse:
             task_manager(backward_fast, standard_speed, standard_acceleration);
-            current_state = einde_opdracht;
+            current_state = end;
             break;
         case forward:
             //task_manager(forward_fast, standard_speed, standard_acceleration);//does AGV return an ack here?

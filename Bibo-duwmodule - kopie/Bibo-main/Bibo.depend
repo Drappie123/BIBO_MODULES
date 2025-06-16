@@ -240,7 +240,7 @@
 	"TM1637.h"
 	"config.h"
 
-1749722263 source:c:\users\quent\documents\documents\4. school\project 2 agv\github modules\bibo_modules\bibo-duwmodule - kopie\bibo-main\basic_io.c
+1750086260 source:c:\users\quent\documents\documents\4. school\project 2 agv\github modules\bibo_modules\bibo-duwmodule - kopie\bibo-main\basic_io.c
 	<avr/io.h>
 	<avr/interrupt.h>
 	<util/delay.h>
@@ -252,7 +252,7 @@
 
 1749722263 c:\users\quent\documents\documents\4. school\project 2 agv\github modules\bibo_modules\bibo-duwmodule - kopie\bibo-main\tm1637.h
 
-1749722263 c:\users\quent\documents\documents\4. school\project 2 agv\github modules\bibo_modules\bibo-duwmodule - kopie\bibo-main\basic_io.h
+1750086260 c:\users\quent\documents\documents\4. school\project 2 agv\github modules\bibo_modules\bibo-duwmodule - kopie\bibo-main\basic_io.h
 
 1749722263 c:\users\quent\documents\documents\4. school\project 2 agv\github modules\bibo_modules\bibo-duwmodule - kopie\bibo-main\config.h
 
@@ -285,7 +285,7 @@
 	"music.h"
 	"intermediate_control.h"
 
-1749722263 c:\users\quent\documents\documents\4. school\project 2 agv\github modules\bibo_modules\bibo-duwmodule - kopie\bibo-main\intermediate_control.h
+1750085676 c:\users\quent\documents\documents\4. school\project 2 agv\github modules\bibo_modules\bibo-duwmodule - kopie\bibo-main\intermediate_control.h
 
 1749722263 source:c:\users\quent\documents\documents\4. school\project 2 agv\github modules\bibo_modules\bibo-duwmodule - kopie\bibo-main\stepper.c
 	<avr/io.h>
@@ -299,7 +299,7 @@
 	"TM1637.h"
 	"config.h"
 
-1749723255 source:c:\users\quent\documents\documents\4. school\project 2 agv\github modules\bibo_modules\bibo-duwmodule - kopie\bibo-main\intermediate_control.c
+1750085786 source:c:\users\quent\documents\documents\4. school\project 2 agv\github modules\bibo_modules\bibo-duwmodule - kopie\bibo-main\intermediate_control.c
 	<avr/io.h>
 	<avr/interrupt.h>
 	"intermediate_control.h"
@@ -309,8 +309,9 @@
 	"basic_io.h"
 	"music.h"
 	"TM1637.h"
+	"communication.h"
 
-1749723399 source:c:\users\quent\documents\documents\4. school\project 2 agv\github modules\bibo_modules\bibo-duwmodule - kopie\bibo-main\main.c
+1750087182 source:c:\users\quent\documents\documents\4. school\project 2 agv\github modules\bibo_modules\bibo-duwmodule - kopie\bibo-main\main.c
 	<avr/io.h>
 	"TM1637.h"
 	"config.h"
