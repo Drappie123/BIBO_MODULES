@@ -38,6 +38,7 @@ int main(void)
     // Store number of detected packages
     int light_packages = 0;
     int heavy_packages = 0;
+    int forward_timer = INITIAL_FORWARD_TIME;
 
     /// --- Init --- ///
     init();
@@ -68,7 +69,7 @@ int main(void)
                     // Show package count
                     display_metal_and_non_metal(heavy_packages, light_packages);
                     // After set time, go slower
-                    if(gp_timer(50)){
+                    if(gp_timer(forward_timer)){
                         // Slow down
                         task_manager(forward_slow, 0x0F, standard_acceleration);
                         current_sub_state = exit;
@@ -167,8 +168,10 @@ int main(void)
                     display_turn();
                     // Check for ACK at end s-turn
                     if(USART1_receiveByte()==0x01){
+                        // Set forward timer to shorter interval
+                        forward_timer = SECOND_FORWARD_TIME;
                         // Transition to weight detection
-                        current_state = weight_detection;
+                        current_state = forward;
                         current_sub_state = entry;
                     }
                     break;

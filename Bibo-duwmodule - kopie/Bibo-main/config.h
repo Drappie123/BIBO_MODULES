@@ -11,6 +11,8 @@
 #define STEERING_MULTIPLIER     7
 #define ERROR_MAX_DISTANCE      14
 #define ERROR_CENTER_DISTANCE   10
+#define INITIAL_FORWARD_TIME     50
+#define SECOND_FORWARD_TIME     40
 // --- Package counting --- //
 #define PACKAGE_COUNT_MIN       1
 #define PACKAGE_COUNT_MAX       99
