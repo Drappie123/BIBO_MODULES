@@ -181,6 +181,8 @@ int main(void)
                     display_turn();
                     // Check for ACK at end s-turn
                     if(USART1_receiveByte()==0x01){
+                        task_manager(stop, standard_speed, standard_acceleration);
+                        gp_timer(-1);
                         // Set forward timer to shorter interval
                         forward_timer = SECOND_FORWARD_TIME;
                         // Transition to weight detection
@@ -204,6 +206,7 @@ int main(void)
                     break;
                 case running:
                     display_end();
+                    task_manager(stop, standard_speed, standard_acceleration);
                     break;
             }
             break;
