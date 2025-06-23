@@ -116,7 +116,6 @@ int main(void)
                 }
                 // Check for ACK to initiate U-turn
                 if (UCSR1A & (1 << RXC1)) {
-                    UCSR1A = (1<<RXC1);
                     if(USART1_receiveByte()==0x01){
                     // Transition to U-turn
                     current_state = u_turn;

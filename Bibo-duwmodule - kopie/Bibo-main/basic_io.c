@@ -74,7 +74,7 @@ uint8_t light_limit_switch_25(void) {
 }
 
 uint8_t heavy_limit_switch_26(void) {
-    return !(PINA & (1 << PA2));
+    return !(PINA & (1 << PA4));
 }
 //starting button
 uint8_t starting_button(void) {
