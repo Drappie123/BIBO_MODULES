@@ -71,10 +71,10 @@ int main(void)
         case forward:
             switch(current_sub_state){
                 case entry:
+                    gp_timer(-1);
                     // Send forward driving command
                     task_manager(forward_fast, standard_speed, standard_acceleration);
                     current_sub_state = running;
-                    gp_timer(-1);
                     break;
                 case running:
                     // Show package count
@@ -160,6 +160,10 @@ int main(void)
                         if(first_package_detected){
                             current_state = reverse;
                             current_sub_state = entry;
+                            // Clear buffer
+                            while (UCSR1A & (1 << RXC1)) {
+                                USART1_receiveByte();
+                            }
                         }
                         else{
                             first_package_detected = 1;
@@ -180,14 +184,16 @@ int main(void)
                 case running:
                     display_turn();
                     // Check for ACK at end s-turn
-                    if(USART1_receiveByte()==0x01){
-                        task_manager(stop, standard_speed, standard_acceleration);
-                        gp_timer(-1);
-                        // Set forward timer to shorter interval
-                        forward_timer = SECOND_FORWARD_TIME;
-                        // Transition to weight detection
-                        current_state = forward;
-                        current_sub_state = entry;
+                    if (UCSR1A & (1 << RXC1)) {
+                        if(USART1_receiveByte()==0x01){
+                            task_manager(stop, standard_speed, standard_acceleration);
+                            gp_timer(-1);
+                            // Set forward timer to shorter interval
+                            forward_timer = SECOND_FORWARD_TIME;
+                            // Transition to driving forward
+                            current_state = forward;
+                            current_sub_state = entry;
+                        }
                     }
                     break;
             }
