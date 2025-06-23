@@ -48,7 +48,7 @@ int main(void)
         running
     };
 
-    enum available_states current_state = wait;
+    enum available_states current_state = test;
     enum available_substates current_substate = entry;
 
     int package_tag=          0;
@@ -76,7 +76,7 @@ int main(void)
         switch(current_state){
         /// -- Test state -- ///
         case test:
-            if(donk_left() || donk_right()){
+            if(donk_detection(&donk_mem_left, &donk_mem_right)){
                 display_fol();
             }
             else{
