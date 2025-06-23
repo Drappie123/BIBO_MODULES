@@ -1,6 +1,6 @@
 /*
 Programming for AGV "Bibo"
-Contains state machine for AGV control
+Contains state machine for RFID module
  */
 // -- Standard libraries -- //
 #include <avr/io.h>                 // Needed for AVR programming
@@ -48,16 +48,15 @@ int main(void)
         running
     };
 
-    enum available_states current_state = test;
+    enum available_states current_state = wait;
     enum available_substates current_substate = entry;
 
     int package_tag=          0;
     int package_no_tag=      0;
     char donk_mem_left = 0;
     char donk_mem_right = 0;
-    int scan_time_left = 0;
-    int scan_time_right = 0;
     char turn_made = 0;
+    char tag_seen = 0;
 
     /// --- Init --- ///
     // Deze twee moet je in de main (of op de plek waar je de functie roept als dat niet in main is)
@@ -76,15 +75,16 @@ int main(void)
         switch(current_state){
         /// -- Test state -- ///
         case test:
-            if(donk_detection(&donk_mem_left, &donk_mem_right)){
-                display_fol();
+            if(rfid_tag_detected(rfid_left)){
+                display_cfg();
             }
             else{
-                display_pac();
+                display_end();
             }
             break;
         /// -- Wait state -- ///
         case wait:
+            display_pac();
             if(starting_button()){
                 while(!gp_timer(TEXT_DISPLAY_TIME)){
                     display_go();
@@ -99,49 +99,29 @@ int main(void)
                 // Send forward driving command
                 task_manager(forward_fast, standard_speed, standard_acceleration);
                 current_substate = running;
+                // Reset donk memory
+                donk_mem_left = 0;
+                donk_mem_right = 0;
                 break;
             case running:
                 // Display packages counted by category
                 display_metal_and_non_metal(package_tag, package_no_tag);
                 // Check sensors for packages
                 if (donk_detection(&donk_mem_left, &donk_mem_right)){
+                    display_cfg();
+                    _delay_ms(500);
                     // Transition to detection
                     current_state = package_detected;
                     current_substate = entry;
                 }
-                // Scan RFID tags
-                if(scan_time_left){
-                    if(rfid_check_tag_present(rfid_left)){
-                        // Correct count
-                        package_no_tag--;
-                        package_tag++;
-                        // Stop scanning
-                        scan_time_left = 0;
-                    }
-                }
-                if(scan_time_right){
-                    if(rfid_check_tag_present(rfid_right)){
-                        // Correct count
-                        package_no_tag--;
-                        package_tag++;
-                        // Stop scanning
-                        scan_time_right = 0;
-                    }
-                }
-                // Reduce scan time
-                if(gp_timer2(1)){
-                    if(scan_time_left){
-                        scan_time_left--;
-                    }
-                    if(scan_time_right){
-                        scan_time_right--;
-                    }
-                }
                 // Check for ACK to initiate U-turn
-                if(USART1_receiveByte()==0x01){
+                if (UCSR1A & (1 << RXC1)) {
+                    UCSR1A = (1<<RXC1);
+                    if(USART1_receiveByte()==0x01){
                     // Transition to U-turn
                     current_state = u_turn;
                     current_substate = entry;
+                    }
                 }
                 break;
             }
@@ -150,18 +130,14 @@ int main(void)
         case package_detected:
             switch(current_substate){
             case entry:
+                if(rfid_check_tag_present(rfid_right) || rfid_check_tag_present(rfid_left)){
+                    tag_seen = 1;
+                }
                 if(turn_made){
                     current_state = end;
                 }
                 else{
-                    package_no_tag++;
-                    // Remember to scan RFID tags while driving
-                    if(donk_mem_left){
-                        scan_time_left = SCAN_TIME;
-                    }
-                    else if(donk_mem_right){
-                        scan_time_right = SCAN_TIME;
-                    }
+                    //package_no_tag++;
                     // Send command to stop AGV
                     task_manager(stop, standard_speed, standard_acceleration);
                     current_substate = running;
@@ -175,11 +151,26 @@ int main(void)
                 // Play buzzer sound
                 while(play_beep()){
                     display_metal_and_non_metal(package_tag, package_no_tag);
+                    if(rfid_check_tag_present(rfid_right) || rfid_check_tag_present(rfid_left)){
+                    tag_seen = 1;
+                    }
                 }
                 // Remain stopped for set time
                 while(!gp_timer(DETECTION_STOP_TIME)){
                     display_metal_and_non_metal(package_tag, package_no_tag);
+                    if(rfid_check_tag_present(rfid_right) || rfid_check_tag_present(rfid_left)){
+                    tag_seen = 1;
+                    }
                 }
+                if(tag_seen){
+                   package_tag++;
+                   tag_seen = 0;
+                   }
+                else{
+                    package_no_tag++;
+                }
+                current_state = forward;
+                current_substate = entry;
 
                 break;
             }

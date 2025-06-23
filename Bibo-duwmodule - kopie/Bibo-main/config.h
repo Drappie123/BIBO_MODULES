@@ -11,8 +11,8 @@
 #define STEERING_MULTIPLIER     7
 #define ERROR_MAX_DISTANCE      14
 #define ERROR_CENTER_DISTANCE   10
-#define INITIAL_FORWARD_TIME     50
-#define SECOND_FORWARD_TIME     40
+#define INITIAL_FORWARD_TIME     30
+#define SECOND_FORWARD_TIME     10
 // --- Package counting --- //
 #define PACKAGE_COUNT_MIN       1
 #define PACKAGE_COUNT_MAX       99
@@ -50,8 +50,8 @@
 // --- Display brightness --- //
 #define NORMAL_BRIGHTNESS       2
 #define MAX_BRIGHTNESS          7
-#define standard_speed          0x01
-#define standard_acceleration   0x01
+#define standard_speed          0xFF
+#define standard_acceleration   0xFF
 /// === Utility === ///
 #define CLAMP(value, min, max) ((value) < (min) ? (min) : (value) > (max) ? (max) : (value))
 

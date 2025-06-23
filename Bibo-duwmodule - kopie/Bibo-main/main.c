@@ -1,6 +1,6 @@
 /*
 Programming for AGV "Bibo"
-Contains state machine for AGV control
+Contains state machine for Manipulator module
  */
 // -- Standard libraries -- //
 #include <avr/io.h>                 // Needed for AVR programming
@@ -50,6 +50,7 @@ int main(void)
         case test:
             break;
         case wait:
+            display_cfg();
             if(starting_button()){
                 while(!gp_timer(TEXT_DISPLAY_TIME)){
                     display_go();
@@ -71,7 +72,7 @@ int main(void)
                     // After set time, go slower
                     if(gp_timer(forward_timer)){
                         // Slow down
-                        task_manager(forward_slow, 0x0F, standard_acceleration);
+                        task_manager(forward_fast, 0x20, standard_acceleration);
                         current_sub_state = exit;
                     }
                     // Check limit switch in case it comes before the slowdown
@@ -87,7 +88,7 @@ int main(void)
                     // Check limit switch for package
                     if(light_limit_switch_25()){
                         // Slow down further
-                        task_manager(forward_slow, 0x09, standard_acceleration);
+                        task_manager(forward_fast, 0x10, standard_acceleration);
                         // Transition
                         current_state = weight_detection;
                         current_sub_state = entry;
