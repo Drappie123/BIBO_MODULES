@@ -39,6 +39,7 @@ int main(void)
     int light_packages = 0;
     int heavy_packages = 0;
     int forward_timer = INITIAL_FORWARD_TIME;
+    char heavy_triggered = 0;
 
     /// --- Init --- ///
     init();
@@ -48,6 +49,15 @@ int main(void)
         // Statemachine Switch
         switch(current_state){
         case test:
+            if(heavy_limit_switch_26()){
+                display_dist();
+            }
+            else if(light_limit_switch_25()){
+                display_end();
+            }
+            else{
+                display_go();
+            }
             break;
         case wait:
             display_cfg();
@@ -87,8 +97,6 @@ int main(void)
                     display_metal_and_non_metal(heavy_packages, light_packages);
                     // Check limit switch for package
                     if(light_limit_switch_25()){
-                        // Slow down further
-                        task_manager(forward_fast, 0x10, standard_acceleration);
                         // Transition
                         current_state = weight_detection;
                         current_sub_state = entry;
@@ -120,7 +128,7 @@ int main(void)
             switch(current_sub_state){
                 case entry:
                     // Go extra slow
-                    task_manager(forward_fast, 0x09, standard_acceleration);
+                    task_manager(forward_fast, 0x10, standard_acceleration);
                     current_sub_state = running;
                     break;
                 case running:
@@ -128,15 +136,19 @@ int main(void)
                     display_metal_and_non_metal(heavy_packages, light_packages);
                     // Check switches
                     if(heavy_limit_switch_26()){
-                        // Stop
-                        task_manager(stop, standard_speed, standard_acceleration);
-                        heavy_packages++;
-                        current_sub_state = exit;
+                        heavy_triggered = 1;
                     }
-                    if(gp_timer(5)){
+                    if(gp_timer(7)){
+                        gp_timer(-1);
                         // Stop
                         task_manager(stop, standard_speed, standard_acceleration);
-                        light_packages++;
+                        if(heavy_triggered){
+                            heavy_packages++;
+                            heavy_triggered = 0;
+                        }
+                        else{
+                            light_packages++;
+                        }
                         current_sub_state = exit;
                     }
                     break;
@@ -144,7 +156,7 @@ int main(void)
                     // Show package count
                     display_metal_and_non_metal(heavy_packages, light_packages);
                     // Transition after set time
-                    if(gp_timer(5)){
+                    if(gp_timer(10)){
                         if(first_package_detected){
                             current_state = reverse;
                             current_sub_state = entry;
