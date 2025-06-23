@@ -120,7 +120,7 @@ int main(void)
             switch(current_sub_state){
                 case entry:
                     // Go extra slow
-                    task_manager(forward_slow, 0x09, standard_acceleration);
+                    task_manager(forward_fast, 0x09, standard_acceleration);
                     current_sub_state = running;
                     break;
                 case running:
@@ -162,7 +162,7 @@ int main(void)
             switch(current_sub_state){
                 default:
                 case entry:
-                    task_manager(stop, standard_speed, standard_acceleration);
+                    task_manager(turn_left_H, standard_speed, standard_acceleration);
                     current_sub_state = running;
                     break;
                 case running:

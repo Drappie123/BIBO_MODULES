@@ -1255,8 +1255,8 @@ int main(void)
                         // Transition to end
                         current_state = end;
                         current_sub_state = entry;
-     56c:	81 2c       	mov	r8, r1
-     56e:	91 2c       	mov	r9, r1
+     56c:	61 2c       	mov	r6, r1
+     56e:	71 2c       	mov	r7, r1
 
 00000570 <.Loc.17>:
                         current_state = end;
@@ -1276,9 +1276,9 @@ int main(void)
                         light_packages++;
                         current_sub_state = exit;
      578:	68 94       	set
-     57a:	66 24       	eor	r6, r6
-     57c:	61 f8       	bld	r6, 1
-     57e:	71 2c       	mov	r7, r1
+     57a:	88 24       	eor	r8, r8
+     57c:	81 f8       	bld	r8, 1
+     57e:	91 2c       	mov	r9, r1
 
 00000580 <.Loc.20>:
                 case running:
@@ -1297,10 +1297,10 @@ int main(void)
 
 00000588 <.Loc.22>:
                             current_sub_state = entry;
-     588:	08 2d       	mov	r16, r8
+     588:	06 2d       	mov	r16, r6
 
 0000058a <.Loc.23>:
-     58a:	19 2d       	mov	r17, r9
+     58a:	17 2d       	mov	r17, r7
 
 0000058c <.Loc.24>:
                             current_state = s_turn;
@@ -1435,11 +1435,11 @@ int main(void)
      612:	41 f7       	brne	.-48     	; 0x5e4 <.L31>
 
 00000614 <.Loc.45>:
-                    task_manager(forward_slow, 0x09, standard_acceleration);
+                    task_manager(forward_fast, 0x09, standard_acceleration);
      614:	4f ef       	ldi	r20, 0xFF	; 255
      616:	69 e0       	ldi	r22, 0x09	; 9
-     618:	88 2d       	mov	r24, r8
-     61a:	99 2d       	mov	r25, r9
+     618:	8e 2d       	mov	r24, r14
+     61a:	9f 2d       	mov	r25, r15
      61c:	0e 94 09 02 	call	0x412	; 0x412 <task_manager>
 
 00000620 <.LVL18>:
@@ -1467,8 +1467,8 @@ int main(void)
 
 00000636 <.Loc.54>:
                 current_state = forward;
-     636:	6a 82       	std	Y+2, r6	; 0x02
-     638:	7b 82       	std	Y+3, r7	; 0x03
+     636:	8a 82       	std	Y+2, r8	; 0x02
+     638:	9b 82       	std	Y+3, r9	; 0x03
      63a:	d4 cf       	rjmp	.-88     	; 0x5e4 <.L31>
 
 0000063c <.L5>:
@@ -1539,10 +1539,10 @@ int main(void)
 
 00000686 <.Loc.71>:
                         current_sub_state = entry;
-     686:	08 2d       	mov	r16, r8
+     686:	06 2d       	mov	r16, r6
 
 00000688 <.Loc.72>:
-     688:	19 2d       	mov	r17, r9
+     688:	17 2d       	mov	r17, r7
 
 0000068a <.Loc.73>:
                         current_state = weight_detection;
@@ -1599,8 +1599,8 @@ int main(void)
 
 000006c8 <.LVL42>:
                         current_sub_state = entry;
-     6c8:	08 2d       	mov	r16, r8
-     6ca:	19 2d       	mov	r17, r9
+     6c8:	06 2d       	mov	r16, r6
+     6ca:	17 2d       	mov	r17, r7
 
 000006cc <.Loc.88>:
                         current_state = weight_detection;
@@ -1652,10 +1652,10 @@ int main(void)
 
 00000700 <.Loc.99>:
                         current_sub_state = entry;
-     700:	08 2d       	mov	r16, r8
+     700:	06 2d       	mov	r16, r6
 
 00000702 <.Loc.100>:
-     702:	19 2d       	mov	r17, r9
+     702:	17 2d       	mov	r17, r7
 
 00000704 <.Loc.101>:
                         current_state = end;
@@ -1711,8 +1711,8 @@ int main(void)
 
 0000073c <.Loc.114>:
                         current_sub_state = exit;
-     73c:	06 2d       	mov	r16, r6
-     73e:	17 2d       	mov	r17, r7
+     73c:	08 2d       	mov	r16, r8
+     73e:	19 2d       	mov	r17, r9
      740:	51 cf       	rjmp	.-350    	; 0x5e4 <.L31>
 
 00000742 <.L35>:
@@ -1731,8 +1731,8 @@ int main(void)
 
 00000754 <.Loc.119>:
                         current_sub_state = exit;
-     754:	06 2d       	mov	r16, r6
-     756:	17 2d       	mov	r17, r7
+     754:	08 2d       	mov	r16, r8
+     756:	19 2d       	mov	r17, r9
      758:	e1 cf       	rjmp	.-62     	; 0x71c <.L20>
 
 0000075a <.L19>:
@@ -1766,10 +1766,10 @@ int main(void)
 
 00000776 <.Loc.128>:
                             current_sub_state = entry;
-     776:	08 2d       	mov	r16, r8
+     776:	06 2d       	mov	r16, r6
 
 00000778 <.Loc.129>:
-     778:	19 2d       	mov	r17, r9
+     778:	17 2d       	mov	r17, r7
 
 0000077a <.Loc.130>:
                             current_state = reverse;
@@ -1788,10 +1788,10 @@ int main(void)
      788:	49 f0       	breq	.+18     	; 0x79c <.L21>
 
 0000078a <.Loc.133>:
-                    task_manager(stop, standard_speed, standard_acceleration);
+                    task_manager(turn_left_H, standard_speed, standard_acceleration);
      78a:	4f ef       	ldi	r20, 0xFF	; 255
      78c:	6f ef       	ldi	r22, 0xFF	; 255
-     78e:	84 e0       	ldi	r24, 0x04	; 4
+     78e:	87 e0       	ldi	r24, 0x07	; 7
      790:	90 e0       	ldi	r25, 0x00	; 0
 
 00000792 <.Loc.134>:
@@ -1831,17 +1831,17 @@ int main(void)
 
 000007b0 <.Loc.145>:
                         current_sub_state = entry;
-     7b0:	08 2d       	mov	r16, r8
+     7b0:	06 2d       	mov	r16, r6
 
 000007b2 <.Loc.146>:
-     7b2:	19 2d       	mov	r17, r9
+     7b2:	17 2d       	mov	r17, r7
 
 000007b4 <.Loc.147>:
                         current_state = forward;
-     7b4:	6a 82       	std	Y+2, r6	; 0x02
+     7b4:	8a 82       	std	Y+2, r8	; 0x02
 
 000007b6 <.Loc.148>:
-     7b6:	7b 82       	std	Y+3, r7	; 0x03
+     7b6:	9b 82       	std	Y+3, r9	; 0x03
      7b8:	15 cf       	rjmp	.-470    	; 0x5e4 <.L31>
 
 000007ba <.L22>:
