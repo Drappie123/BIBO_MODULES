@@ -4,6 +4,7 @@
 #include <avr/io.h>
 #include "music.h"
 #include "intermediate_control.h"
+#include "config.h"
 
 void music_init(void){
     // Start as high input to prevent noise from voltage fluctuations
@@ -54,16 +55,16 @@ char play_beep(){
     }
     switch(note_number){
     case 0:
-        play_note(NOTE_5, 1, 10, &note_number);
+        play_note(NOTE_5, 1, VOLUME, &note_number);
         break;
     case 1:
         play_note(NOTE_3, 1, 0, &note_number);
         break;
     case 2:
-        play_note(NOTE_1, 1, 10, &note_number);
+        play_note(NOTE_1, 1, VOLUME, &note_number);
         break;
     case 3:
-        play_note(NOTE_8, 1, 10, &note_number);
+        play_note(NOTE_8, 1, VOLUME, &note_number);
         break;
     case 4:
         play_note(NOTE_8, 1, 0, &note_number);
@@ -84,19 +85,19 @@ char play_beep_sad(){
     }
     switch(note_number){
     case 0:
-        play_note(NOTE_3, 3, 1, &note_number);
+        play_note(NOTE_3, 3, VOLUME, &note_number);
         break;
     case 1:
         play_note(NOTE_3, 2, 0, &note_number);
         break;
     case 2:
-        play_note(NOTE_2, 3, 1, &note_number);
+        play_note(NOTE_2, 3, VOLUME, &note_number);
         break;
     case 3:
-        play_note(NOTE_1, 7, 1, &note_number);
+        play_note(NOTE_1, 7, VOLUME, &note_number);
         break;
     case 4:
-        play_note(NOTE_8, 30, 0, &note_number);
+        play_note(NOTE_8, 1, 0, &note_number);
         break;
     case 5:
         buzzer_enable(0);
@@ -114,43 +115,43 @@ char play_song(){
     }
     switch(note_number){
     case 0:
-        play_note(NOTE_8, 1, 1, &note_number);
+        play_note(NOTE_8, 1, VOLUME, &note_number);
         break;
     case 1:
-        play_note(NOTE_7, 1, 1, &note_number);
+        play_note(NOTE_7, 1, VOLUME, &note_number);
         break;
     case 2:
-        play_note(NOTE_3, 2, 1, &note_number);
+        play_note(NOTE_3, 2, VOLUME, &note_number);
         break;
     case 3:
-        play_note(NOTE_4, 2, 1, &note_number);
+        play_note(NOTE_4, 2, VOLUME, &note_number);
         break;
     case 4:
-        play_note(NOTE_7, 1, 1, &note_number);
+        play_note(NOTE_7, 1, VOLUME, &note_number);
         break;
     case 5:
-        play_note(NOTE_6, 1, 1, &note_number);
+        play_note(NOTE_6, 1, VOLUME, &note_number);
         break;
     case 6:
-        play_note(NOTE_1, 2, 1, &note_number);
+        play_note(NOTE_1, 2, VOLUME, &note_number);
         break;
     case 7:
-        play_note(NOTE_2, 2, 1, &note_number);
+        play_note(NOTE_2, 2, VOLUME, &note_number);
         break;
     case 8:
-        play_note(NOTE_6, 1, 1, &note_number);
+        play_note(NOTE_6, 1, VOLUME, &note_number);
         break;
     case 9:
-        play_note(NOTE_5, 1, 1, &note_number);
+        play_note(NOTE_5, 1, VOLUME, &note_number);
         break;
     case 10:
-        play_note(NOTE_1, 2, 1, &note_number);
+        play_note(NOTE_1, 2, VOLUME, &note_number);
         break;
     case 11:
-        play_note(NOTE_2, 2, 1, &note_number);
+        play_note(NOTE_2, 2, VOLUME, &note_number);
         break;
     case 12:
-        play_note(NOTE_3, 5, 1, &note_number);
+        play_note(NOTE_3, 5, VOLUME, &note_number);
         break;
     case 13:
         play_note(NOTE_1, 5, 0, &note_number);

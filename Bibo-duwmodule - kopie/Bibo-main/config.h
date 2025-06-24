@@ -37,6 +37,8 @@
 #define FOLLOW_SPEED_MULTIPLIER 1
 #define FOLLOW_STEERING         60
 /// --- General settings --- ///
+// Sound loudness
+#define VOLUME                  40
 // Number of detection needed, 1 lowest sensitivity
 #define PATH_SENSITIVITY        4
 #define PERSON_SENSITIVITY      2

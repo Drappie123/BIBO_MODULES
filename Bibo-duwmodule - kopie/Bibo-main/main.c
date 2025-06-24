@@ -12,6 +12,8 @@ Contains state machine for Manipulator module
 #include "intermediate_control.h"   // Control functions from other libraries
 #include "communication.h"          // communication between master and slave
 
+#include <util/delay.h>
+
 int main(void)
 {
     /// --- Variables --- ///
@@ -144,10 +146,23 @@ int main(void)
                         task_manager(stop, standard_speed, standard_acceleration);
                         if(heavy_triggered){
                             heavy_packages++;
-                            heavy_triggered = 0;
                         }
                         else{
                             light_packages++;
+                        }
+                        // Play sound
+                        if(heavy_triggered){
+                            heavy_triggered = 0;
+                            while(play_beep_sad()){
+                                // Show package count
+                            display_metal_and_non_metal(heavy_packages, light_packages);
+                            }
+                        }
+                        else{
+                            while(play_beep()){
+                                // Show package count
+                            display_metal_and_non_metal(heavy_packages, light_packages);
+                            }
                         }
                         current_sub_state = exit;
                     }
@@ -156,7 +171,7 @@ int main(void)
                     // Show package count
                     display_metal_and_non_metal(heavy_packages, light_packages);
                     // Transition after set time
-                    if(gp_timer(10)){
+                    if(gp_timer(6)){
                         if(first_package_detected){
                             current_state = reverse;
                             current_sub_state = entry;
@@ -191,9 +206,14 @@ int main(void)
                             // Set forward timer to shorter interval
                             forward_timer = SECOND_FORWARD_TIME;
                             // Transition to driving forward
-                            current_state = forward;
-                            current_sub_state = entry;
+                            current_sub_state = exit;
                         }
+                    }
+                    break;
+                case exit:
+                    if(gp_timer(2)){
+                        current_state = forward;
+                        current_sub_state = entry;
                     }
                     break;
             }
@@ -212,7 +232,6 @@ int main(void)
                     break;
                 case running:
                     display_end();
-                    task_manager(stop, standard_speed, standard_acceleration);
                     break;
             }
             break;
