@@ -39,18 +39,11 @@
 /// --- Functions --- ///
 void basic_io_init(void);
 void donk_init(void);
-void buttons_init(void);
 void init_stop_button(void);
-void led_init(void);
+char stop_pressed(void);
 char donk_left(void);
 char donk_right(void);
-char plus_pressed(void);
-char minus_pressed(void);
-char enter_pressed(void);
-char stop_pressed(void);
-char plus_pressed_once(void);
-char minus_pressed_once(void);
-char enter_pressed_once(void);
-void led_control(char power);
+void start_button_init(void);
+uint8_t starting_button(void);
 
 #endif // BASIC_IO_H_INCLUDED

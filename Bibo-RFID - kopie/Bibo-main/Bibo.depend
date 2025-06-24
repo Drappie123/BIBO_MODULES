@@ -348,10 +348,11 @@
 	"TM1637.h"
 	"config.h"
 
-1749729561 source:c:\users\quent\documents\documents\4. school\project 2 agv\github modules\bibo_modules\bibo-rfid - kopie\bibo-main\basic_io.c
+1750753685 source:c:\users\quent\documents\documents\4. school\project 2 agv\github modules\bibo_modules\bibo-rfid - kopie\bibo-main\basic_io.c
 	<avr/io.h>
 	<avr/interrupt.h>
 	<util/delay.h>
+	<stdlib.h>
 	"TM1637.h"
 	"basic_io.h"
 	"config.h"
@@ -360,7 +361,7 @@
 
 1749905992 c:\users\quent\documents\documents\4. school\project 2 agv\github modules\bibo_modules\bibo-rfid - kopie\bibo-main\tm1637.h
 
-1749722263 c:\users\quent\documents\documents\4. school\project 2 agv\github modules\bibo_modules\bibo-rfid - kopie\bibo-main\basic_io.h
+1750753793 c:\users\quent\documents\documents\4. school\project 2 agv\github modules\bibo_modules\bibo-rfid - kopie\bibo-main\basic_io.h
 
 1749905875 c:\users\quent\documents\documents\4. school\project 2 agv\github modules\bibo_modules\bibo-rfid - kopie\bibo-main\config.h
 
@@ -428,7 +429,7 @@
 	"TM1637.h"
 	"config.h"
 
-1750669874 source:c:\users\quent\documents\documents\4. school\project 2 agv\github modules\bibo_modules\bibo-rfid - kopie\bibo-main\main.c
+1750753347 source:c:\users\quent\documents\documents\4. school\project 2 agv\github modules\bibo_modules\bibo-rfid - kopie\bibo-main\main.c
 	<avr/io.h>
 	<util/delay.h>
 	"TM1637.h"

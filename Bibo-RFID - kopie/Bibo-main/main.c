@@ -14,21 +14,6 @@ Contains state machine for RFID module
 #include "communication.h"          // communication between master and slave
 #include "rfid_mfrc522.h"           // RFID
 
-
-//OPERATOR (MASTER)
-void start_button_init(void){
-    // Set PD1 startbutton
-    DDRD &= ~((1 << PD1));
-
-    // Optional: Enable pull-up resistors startbutton
-    PORTD |= (1 << PD1);
-}
-//starting button
-uint8_t starting_button() {
-    return !(PIND & (1 << PD1));
-}
-
-
 int main(void)
 {
     /// --- Variables --- ///
@@ -60,7 +45,6 @@ int main(void)
 
     /// --- Init --- ///
     // Deze twee moet je in de main (of op de plek waar je de functie roept als dat niet in main is)
-    start_button_init();
     spi_device rfid_left = {&PORTB, PB0, &DDRB};
     spi_device rfid_right = {&PORTL, PL0, &DDRL};
     init();

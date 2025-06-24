@@ -12,17 +12,17 @@
 
 // --- STOP KNOP --- //
 ISR(INT0_vect){
-    if(stop_pressed()){
-        while(stop_pressed()){
-            // Stop steppers
-            DDR_ST1_STEP &= ~(1<<PIN_ST1_STEP);
-            DDR_ST2_STEP &= ~(1<<PIN_ST2_STEP);
+        while(1){
+            // STOP SLAVE
+            PORTA &= ~(1<<PA0);
             buzzer_enable(0);
             if(stop_pressed()){
                 display_txt_stop();
             }
             else{
-                if(!stop_pressed()){
+                if(starting_button()){
+                    // Reset slave
+                    PORTA |= (1<<PA0);
                     // RESET arduino
                     cli();
                     // Enable Watchdog Timer and set minimum timeout
@@ -32,10 +32,6 @@ ISR(INT0_vect){
                 }
             }
         }
-        // Re-enable steppers
-        DDR_ST1_STEP |= (1<<PIN_ST1_STEP);
-        DDR_ST2_STEP |= (1<<PIN_ST2_STEP);
-    }
 }
 
 // --- Init all basic-io --- //
@@ -47,6 +43,10 @@ void basic_io_init(void){
 // --- INIT INTERRUPT FOR STOP BUTTON --- //
 void init_stop_button(void){
     DDR_STOP &= ~(1<<PIN_STOP);
+    PORT_STOP |= (1<<PIN_STOP);
+    DDRA |= (1<<PA0);
+    PORTA |= (1<<PA0);
+
     EICRA |= (1<<ISC01) | (1<<ISC00);  // Rising edge
     EIMSK |= (1<<INT0);
 }
