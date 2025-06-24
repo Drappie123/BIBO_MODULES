@@ -92,7 +92,8 @@ int main(void)
                 display_metal_and_non_metal(package_tag, package_no_tag);
                 // Check sensors for packages
                 if (donk_detection(&donk_mem_left, &donk_mem_right)){
-                    _delay_ms(500);
+                    //_delay_ms(500);
+                    while(!gp_timer(5));
                     // Transition to detection
                     current_state = package_detected;
                     current_substate = entry;

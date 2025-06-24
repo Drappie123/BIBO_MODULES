@@ -1126,7 +1126,7 @@ char gp_timer(int set_value){
 000004e8 <.Loc.12>:
     int forward_timer = INITIAL_FORWARD_TIME;
      4e8:	0f 2e       	mov	r0, r31
-     4ea:	fa e5       	ldi	r31, 0x5A	; 90
+     4ea:	f0 e5       	ldi	r31, 0x50	; 80
      4ec:	af 2e       	mov	r10, r31
      4ee:	b1 2c       	mov	r11, r1
      4f0:	f0 2d       	mov	r31, r0
@@ -1801,7 +1801,7 @@ char gp_timer(int set_value){
 000007aa <.LVL72>:
                             forward_timer = SECOND_FORWARD_TIME;
      7aa:	0f 2e       	mov	r0, r31
-     7ac:	f6 e4       	ldi	r31, 0x46	; 70
+     7ac:	f7 e3       	ldi	r31, 0x37	; 55
      7ae:	af 2e       	mov	r10, r31
      7b0:	b1 2c       	mov	r11, r1
      7b2:	f0 2d       	mov	r31, r0
