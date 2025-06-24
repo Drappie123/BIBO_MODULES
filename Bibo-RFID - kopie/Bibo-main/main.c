@@ -92,7 +92,6 @@ int main(void)
                 display_metal_and_non_metal(package_tag, package_no_tag);
                 // Check sensors for packages
                 if (donk_detection(&donk_mem_left, &donk_mem_right)){
-                    display_cfg();
                     _delay_ms(500);
                     // Transition to detection
                     current_state = package_detected;
@@ -120,7 +119,6 @@ int main(void)
                     current_state = end;
                 }
                 else{
-                    //package_no_tag++;
                     // Send command to stop AGV
                     task_manager(stop, standard_speed, standard_acceleration);
                     current_substate = running;
@@ -131,13 +129,6 @@ int main(void)
                 display_metal_and_non_metal(package_tag, package_no_tag);
                 // Make display extra bright
                 display_brightness(MAX_BRIGHTNESS);
-                // Play buzzer sound
-                while(play_beep()){
-                    display_metal_and_non_metal(package_tag, package_no_tag);
-                    if(rfid_check_tag_present(rfid_right) || rfid_check_tag_present(rfid_left)){
-                    tag_seen = 1;
-                    }
-                }
                 // Remain stopped for set time
                 while(!gp_timer(DETECTION_STOP_TIME)){
                     display_metal_and_non_metal(package_tag, package_no_tag);
@@ -145,13 +136,16 @@ int main(void)
                     tag_seen = 1;
                     }
                 }
+                // Count up and play sound
                 if(tag_seen){
                    package_tag++;
-                   tag_seen = 0;
+                   while(play_beep());
                    }
                 else{
                     package_no_tag++;
+                    while(play_beep_sad());
                 }
+                tag_seen = 0;
                 current_state = forward;
                 current_substate = entry;
 
