@@ -363,7 +363,7 @@
 
 1750753793 c:\users\quent\documents\documents\4. school\project 2 agv\github modules\bibo_modules\bibo-rfid - kopie\bibo-main\basic_io.h
 
-1750760754 c:\users\quent\documents\documents\4. school\project 2 agv\github modules\bibo_modules\bibo-rfid - kopie\bibo-main\config.h
+1750763456 c:\users\quent\documents\documents\4. school\project 2 agv\github modules\bibo_modules\bibo-rfid - kopie\bibo-main\config.h
 
 1749722263 c:\users\quent\documents\documents\4. school\project 2 agv\github modules\bibo_modules\bibo-rfid - kopie\bibo-main\stepper.h
 
@@ -430,7 +430,7 @@
 	"TM1637.h"
 	"config.h"
 
-1750760954 source:c:\users\quent\documents\documents\4. school\project 2 agv\github modules\bibo_modules\bibo-rfid - kopie\bibo-main\main.c
+1750762568 source:c:\users\quent\documents\documents\4. school\project 2 agv\github modules\bibo_modules\bibo-rfid - kopie\bibo-main\main.c
 	<avr/io.h>
 	<util/delay.h>
 	"TM1637.h"

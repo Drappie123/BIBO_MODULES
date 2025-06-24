@@ -26,7 +26,7 @@
 #define TURN_WALL_DISTANCE      12
 /// --- General settings --- ///
 // Buzzer loudness
-#define VOLUME                  20
+#define VOLUME                  15
 // Number of detection needed, 1 lowest sensitivity
 #define PATH_SENSITIVITY        4
 #define PERSON_SENSITIVITY      2
