@@ -84,15 +84,20 @@ int main(void)
                 task_manager(forward_fast, standard_speed, standard_acceleration);
                 current_substate = running;
                 // Reset donk memory
-                donk_mem_left = 0;
-                donk_mem_right = 0;
+                //donk_mem_left = 0;
+                //donk_mem_right = 0;
+                tag_seen = 0;
                 break;
             case running:
                 // Display packages counted by category
                 display_metal_and_non_metal(package_tag, package_no_tag);
                 // Check sensors for packages
                 if (donk_detection(&donk_mem_left, &donk_mem_right)){
-                    _delay_ms(500);
+                    while(!gp_timer(4)){
+                        if(rfid_check_tag_present(rfid_right) || rfid_check_tag_present(rfid_left)){
+                            tag_seen = 1;
+                        }
+                    }
                     // Transition to detection
                     current_state = package_detected;
                     current_substate = entry;

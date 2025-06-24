@@ -103,8 +103,8 @@ char donk_detection(char *mem_left, char *mem_right){
     }
     // Return 1 if detected and not detected before in previous cycle
      if((donk_left() && !*mem_left) ||(donk_right() && !*mem_right)){
-        *mem_left = donk_left();
-        *mem_right = donk_right();
+        //*mem_left = donk_left();
+        //*mem_right = donk_right();
         return 1;
      }
     return 0;
