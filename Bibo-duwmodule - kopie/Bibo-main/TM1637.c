@@ -165,6 +165,13 @@ void display_direction(char dir){
     }
 }
 // --- Various things to display --- //
+void display_push(void){
+    display_letter(14, 0);
+    display_letter(18, 1);
+    display_letter(16, 2);
+    display_letter(8, 3);
+}
+
 void display_cfg(void){
     display_letter(19, 0);
     display_letter(3, 1);

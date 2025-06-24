@@ -22,6 +22,7 @@ void display_init(void);
 
 void display_mode(char mode);
 void display_direction(char dir);
+void display_push(void);
 void display_cfg(void);
 void display_fol(void);
 void display_cnt(void);

@@ -51,18 +51,9 @@ int main(void)
         // Statemachine Switch
         switch(current_state){
         case test:
-            if(heavy_limit_switch_26()){
-                display_dist();
-            }
-            else if(light_limit_switch_25()){
-                display_end();
-            }
-            else{
-                display_go();
-            }
             break;
         case wait:
-            display_cfg();
+            display_push();
             if(starting_button()){
                 while(!gp_timer(TEXT_DISPLAY_TIME)){
                     display_go();
